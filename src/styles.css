@@ -4,6 +4,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui;
+  --font-body: "DM Sans", ui-sans-serif, system-ui;
+  --color-tertiary: var(--tertiary);
+  --color-on-surface: var(--foreground);
+  --color-on-surface-variant: var(--muted-foreground);
+  --color-surface-container: var(--surface-container);
+  --color-surface-container-low: var(--surface-container-low);
+  --color-surface-bright: var(--surface-bright);
+  --color-primary-container: var(--primary-container);
+}
+
 /*
  * Design system definition.
  *
