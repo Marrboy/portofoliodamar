@@ -20,6 +20,14 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Environment
+.env
+.env.*
+!.env.example
+
+# Large original photo — the site uses the optimized WebP instead
+public/images/profile.png
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

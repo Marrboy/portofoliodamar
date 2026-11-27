@@ -6,27 +6,33 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  type ErrorComponentProps,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { PROFILE } from "@/data/portfolio";
+import { THEME_STORAGE_KEY } from "@/hooks/use-theme";
+import { CLOUDFLARE_ANALYTICS_TOKEN, SITE_DESCRIPTION, SITE_TITLE } from "../lib/site";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+    <div className="flex min-h-screen items-center justify-center bg-[var(--canvas)] px-5 text-[var(--ink)]">
+      <div className="max-w-md border-y border-[var(--ink)]/25 py-14 text-center">
+        <p className="font-serif text-[14px] italic text-[var(--ink)]">404</p>
+        <h1 className="mt-6 font-display text-[clamp(42px,8vw,62px)] font-semibold leading-[1.05]">
+          Page not found
+        </h1>
+        <p className="mt-4 text-[13.5px] leading-relaxed text-[var(--body)]">
+          The page you are looking for is unavailable or has moved.
         </p>
-        <div className="mt-6">
+        <div className="mt-8">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex h-11 items-center rounded-full border border-[var(--ink)]/40 px-6 text-[13px] text-[var(--ink)] transition-colors hover:border-[var(--ink)] hover:bg-[var(--button-bg)]/[0.06]"
           >
-            Go home
+            Back to portfolio
           </Link>
         </div>
       </div>
@@ -34,7 +40,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -42,29 +48,29 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
+    <div className="flex min-h-screen items-center justify-center bg-[var(--canvas)] px-5 text-[var(--ink)]">
+      <div className="max-w-md border-y border-[var(--ink)]/25 py-14 text-center">
+        <h1 className="font-display text-[clamp(36px,6vw,48px)] font-semibold leading-tight">
+          Page failed to load
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+        <p className="mt-4 text-[13.5px] leading-relaxed text-[var(--body)]">
+          Something went wrong while displaying this page. Please try again.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
           <button
             onClick={() => {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex h-11 items-center rounded-full bg-[var(--button-bg)] px-6 text-[13px] text-[var(--on-ink)] transition-colors hover:bg-[var(--button-hover)]"
           >
             Try again
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+            className="inline-flex h-11 items-center rounded-full border border-[var(--ink)]/40 px-6 text-[13px] text-[var(--ink)] transition-colors hover:border-[var(--ink)] hover:bg-[var(--button-bg)]/[0.06]"
           >
-            Go home
+            Portfolio home
           </a>
         </div>
       </div>
@@ -77,20 +83,26 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Damar Galih Subiyanto — AI-Driven Web Developer" },
-      {
-        name: "description",
-        content: "Portofolio web developer AI-native: proyek, skill, dan kontak.",
-      },
-      { name: "author", content: "Damar Galih Subiyanto" },
-      { property: "og:title", content: "Damar Galih Subiyanto — AI-Driven Web Developer" },
-      {
-        property: "og:description",
-        content: "Portofolio web developer AI-native: proyek, skill, dan kontak.",
-      },
+      { title: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { name: "author", content: PROFILE.fullName },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
+      { name: "theme-color", content: "#FFFFFF" },
+      { property: "og:site_name", content: SITE_TITLE },
+      { property: "og:title", content: SITE_TITLE },
+      { property: "og:description", content: SITE_DESCRIPTION },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    scripts: CLOUDFLARE_ANALYTICS_TOKEN
+      ? [
+          {
+            src: "https://static.cloudflareinsights.com/beacon.min.js",
+            defer: true,
+            "data-cf-beacon": JSON.stringify({ token: CLOUDFLARE_ANALYTICS_TOKEN }),
+          },
+        ]
+      : [],
     links: [
       {
         rel: "stylesheet",
@@ -100,11 +112,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap",
-      },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0",
+        href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
@@ -115,11 +123,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const themeScript = `try{var k=${JSON.stringify(
+  THEME_STORAGE_KEY,
+)};var s=localStorage.getItem(k);var d=s?s==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",d);var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",d?"#000000":"#FFFFFF")}catch(e){}`;
+
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>
         {children}
