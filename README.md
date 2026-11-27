@@ -6,10 +6,10 @@ All displayed content is based on the CV in `src/data/portfolio.ts`. No invented
 
 ## Overview
 
-- `/` — single-page portfolio with anchor navigation: About, Skills, Projects, Experience, Education, Certifications and Contact.
+- `/` — single-page portfolio with anchor navigation: About, Services, Projects, Experience, Education, Certifications and Contact.
 - `/cv` — print-friendly resume generated from the same data; use the browser print dialog to save as PDF.
 - SSR with an error boundary, `sitemap.xml`, `robots.txt`, canonical URLs, Open Graph metadata and JSON-LD `Person`.
-- Contact uses a glass contact form that composes a `mailto:` draft (no backend, no data stored) plus direct email and LinkedIn links.
+- Contact uses a glass contact form that composes a `mailto:` draft (no backend, no data stored) plus direct email, LinkedIn, Instagram and GitHub links.
 - Social links (LinkedIn, Instagram, GitHub) appear as a centered icon row at the end of the photo-free hero, plus in the contact section, footer and CV header; all URLs come from `PROFILE` in `src/data/portfolio.ts`. The portrait is shown in About.
 - Visual system: light editorial by default with a working dark mode toggle in the centered floating pill navbar. Light uses a white/`#F7F8FA` canvas and `#111111` ink; dark is monochrome — pure white text on a true `#000000` canvas with white primary buttons. Inter bold headlines, Cormorant Garamond italic accents, restrained Framer Motion, responsive mobile-first layout. Theme choice is stored in `localStorage` and applied before paint; the first visit follows the system preference.
 
@@ -17,14 +17,14 @@ All displayed content is based on the CV in `src/data/portfolio.ts`. No invented
 
 | Section        | Content                                                                                        |
 | -------------- | ---------------------------------------------------------------------------------------------- |
-| Hero           | Name, junior web developer headline, summary, avatar/monogram, CTAs, social links, CV link     |
+| Hero           | Centered name and headline, concise summary, CTAs, data-derived metrics and icon social links  |
 | About          | Informatics background, web development, UI/UX and data interests                              |
 | Services       | Six CV-backed skill categories as cards; no arbitrary skill percentages                        |
 | Projects       | Used Car Price Prediction (academic project) with a details dialog                             |
 | Experience     | Celerates School, Vibe Coding, KPU Jakarta Utara, plus HIMTI Gunadarma organization experience |
 | Education      | Gunadarma University, Bachelor of Informatics, GPA 3.58/4.00                                   |
 | Certifications | Nine courses plus the BNSP Junior Web Programmer certification                                 |
-| Contact        | Glass form that opens an email draft, plus direct email and LinkedIn links                     |
+| Contact        | Glass form that opens an email draft, plus email, LinkedIn, Instagram and GitHub links         |
 
 ## Project Structure
 
@@ -38,7 +38,7 @@ src/
 │   └── sitemap[.]xml.ts        # Dynamic sitemap.xml (/ and /cv)
 ├── components/portfolio/       # Section components + shared UI helpers
 ├── data/portfolio.ts           # Single source of truth for all content
-├── hooks/                      # use-reduced-motion
+├── hooks/                      # use-theme (light/dark, localStorage, meta theme-color)
 ├── lib/
 │   ├── site.ts                 # URL/SEO/analytics config from env
 │   ├── url.ts                  # URL normalization (pure function)
@@ -49,7 +49,7 @@ src/
 └── styles.css                  # Tailwind v4 theme, dark sections, print rules
 public/
 ├── favicon.ico
-└── robots.txt                  # Legacy file; the route above takes precedence
+└── images/profile.webp         # Optimized portrait; the large PNG original is git-ignored
 ```
 
 ## Commands
@@ -95,4 +95,4 @@ Build output:
 
 Change `src/data/portfolio.ts` only. Sections, CV and structured data all read from it. Do not add skills, experience, projects or links that are not on the CV.
 
-`PROFILE.avatar` points to `/images/profile.webp`, an optimized version of the owner-supplied `public/images/profile.png`; `ProfileImage` falls back to a serif monogram if the file is missing, so the page never shows a broken image. `PROFILE.linkedin`, `PROFILE.instagram` and `PROFILE.github` hold the owner-supplied social URLs and are reused across the page, the CV and JSON-LD `sameAs`. See `docs/DESIGN-SYSTEM.md` for the UI structure, component hierarchy and Tailwind styling system.
+`PROFILE.avatar` points to `/images/profile.webp`, an optimized version of the owner-supplied photo (the large PNG original is kept locally but git-ignored); `ProfileImage` falls back to a serif monogram if the file is missing, so the page never shows a broken image. `PROFILE.linkedin`, `PROFILE.instagram` and `PROFILE.github` hold the owner-supplied social URLs and are reused across the page, the CV and JSON-LD `sameAs`. See `docs/DESIGN-SYSTEM.md` for the UI structure, component hierarchy and Tailwind styling system.

@@ -4,7 +4,7 @@ Implementation reference for the current portfolio. The live code lives in `src/
 
 ## 1. Design direction
 
-A recruiter-facing portfolio for a junior web developer and informatics graduate. The visual language is **light editorial by default**: a white/off-white canvas, a centered dark floating pill for navigation, bold sans-serif headlines with restrained Cormorant Garamond italic accents, hairline gray rules and generous whitespace. The profile card is a slightly tilted "polaroid" that uses the owner's photo, falling back to a monogram if the file is missing.
+A recruiter-facing portfolio for a junior web developer and informatics graduate. The visual language is **light editorial by default**: a white/off-white canvas, a centered dark floating pill for navigation, bold sans-serif headlines with restrained Cormorant Garamond italic accents, hairline gray rules and generous whitespace. The opening hero is purely typographic; the owner's portrait appears in a slightly tilted card in About, falling back to a monogram if the file is missing.
 
 **Dark mode is a real second theme**, not an icon-only control. Every component reads semantic CSS variables, so adding `.dark` to `<html>` swaps the full palette (canvas, ink, hairlines, buttons and navbar pill). The first visit follows `prefers-color-scheme`; the choice is then persisted in `localStorage` and applied by a pre-paint script, then updated live by `src/hooks/use-theme.ts`.
 
@@ -29,7 +29,7 @@ Dark theme overrides (via `.dark`): monochrome by request — canvas `#000000`, 
 
 Typography: **Inter** for display/headlines and body (weight 600–700, tight `-0.035em` tracking), **Cormorant Garamond** italic only for emphasis words, monograms and quiet pull-quotes.
 
-Scale: hero `clamp(42px, 6.4vw, 76px)`, section headings `clamp(34px, 4.4vw, 52px)`, card titles `18–21px`, body `13–14.5px` with `1.75–1.95` line-height, labels `10.5–11px` uppercase with `0.14–0.2em` tracking.
+Scale: hero `clamp(40px, 5.2vw, 64px)`, section headings `clamp(34px, 4.4vw, 52px)`, card titles `18–21px`, body `13–14.5px` with `1.75–1.95` line-height, labels `10–12px` uppercase with `0.14–0.2em` tracking.
 
 ## 3. Component hierarchy
 
@@ -40,8 +40,8 @@ src/routes/__root.tsx                     HTML shell, global head, 404/error bou
         └── Index
             ├── Navbar                    centered dark pill, primary links, CTA, theme toggle, mobile menu
             ├── main
-            │   ├── HeroSection           badge, headline, CTAs, data-derived metrics, polaroid
-            │   ├── AboutSection          summary, CV skill chips, portrait monogram
+            │   ├── HeroSection           badge, headline, CTAs, data-derived metrics, social icon row
+            │   ├── AboutSection          summary, CV skill chips, photo with monogram fallback
             │   ├── ServicesSection       6 CV-backed skill cards with lucide icons
             │   ├── ProjectsSection       CSS project plate + accessible details dialog
             │   ├── ExperienceSection     two-column vertical timeline + organization entry
@@ -126,11 +126,11 @@ const reduce = useReducedMotion();
 
 - Mobile-first utilities; `sm` 640, `md` 768, `lg` 1024. All multi-column grids collapse to one below their breakpoint.
 - Verify `document.documentElement.scrollWidth <= window.innerWidth` at 390px.
-- The hero/about plates use `/images/profile.webp` through `ProfileImage`, which falls back to a CSS monogram if the file is missing; the project chart is CSS, not a fake screenshot.
+- The About plate uses `/images/profile.webp` through `ProfileImage`, which falls back to a CSS monogram if the file is missing; the project chart is CSS, not a fake screenshot.
 - Framer Motion is the only animation dependency (pinned `14.14.0` in `package.json` and `bun.lock`).
 - Fonts load from Google Fonts with `preconnect`; only Cormorant Garamond and Inter are requested.
 - SEO: canonical, OG, Twitter, JSON-LD `Person`, `lang="en"`, semantic `h1 → h2 → h3`, descriptive link text.
 
 ## 8. Content guardrails
 
-All copy comes from `src/data/portfolio.ts` and must match the CV. `PROFILE.avatar` points to the owner-supplied `/images/profile.webp`; `PROFILE.linkedin`, `PROFILE.instagram` and `PROFILE.github` hold the verified social URLs supplied by the owner and feed the hero rail, contact list, footer, CV header and JSON-LD `sameAs`. Hero metrics are counts derived from existing data — never marketing percentages. Never add invented experience, metrics, testimonials, repositories or demo links.
+All copy comes from `src/data/portfolio.ts` and must match the CV. `PROFILE.avatar` points to the owner-supplied `/images/profile.webp`; `PROFILE.linkedin`, `PROFILE.instagram` and `PROFILE.github` hold the verified social URLs supplied by the owner and feed the hero icon row, contact list, footer, CV header and JSON-LD `sameAs`. Hero metrics are counts derived from existing data — never marketing percentages. Never add invented experience, metrics, testimonials, repositories or demo links.

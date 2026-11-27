@@ -1,6 +1,5 @@
 @import "tailwindcss" source(none);
 @source "../src";
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -8,61 +7,18 @@
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Cormorant Garamond", Georgia, serif;
-  --color-tertiary: var(--tertiary);
-  --color-on-surface: var(--foreground);
-  --color-on-surface-variant: var(--muted-foreground);
-  --color-surface-container: var(--surface-container);
-  --color-surface-container-low: var(--surface-container-low);
-  --color-surface-bright: var(--surface-bright);
-  --color-primary-container: var(--primary-container);
-}
 
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
-  --radius-4xl: calc(var(--radius) + 16px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-ring-offset-background: var(--background);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+  /* Explicit radii preserve the card/menu look without a shadcn alias layer. */
+  --radius-sm: 0rem;
+  --radius-md: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.375rem;
+  --radius-2xl: 0.5rem;
+  --radius-3xl: 0.625rem;
+  --radius-4xl: 0.75rem;
 }
 
 :root {
-  --radius: 0.25rem;
-
   /* Semantic palette — components reference these, so the toggle swaps everything. */
   --canvas: #ffffff;
   --canvas-soft: #f7f8fa;
@@ -89,44 +45,6 @@
   --selection: rgba(17, 17, 17, 0.12);
   --shadow: rgba(17, 17, 17, 0.45);
   --scrim: rgba(17, 17, 17, 0.7);
-
-  --background: var(--canvas);
-  --foreground: var(--ink);
-  --card: var(--canvas);
-  --card-foreground: var(--ink);
-  --popover: var(--canvas);
-  --popover-foreground: var(--ink);
-  --primary: var(--button-bg);
-  --primary-foreground: var(--on-ink);
-  --primary-container: var(--sub-body);
-  --tertiary: var(--canvas-soft);
-  --secondary: var(--canvas-soft);
-  --secondary-foreground: var(--sub-body);
-  --muted: var(--canvas-soft);
-  --muted-foreground: var(--body);
-  --accent: var(--button-bg);
-  --accent-foreground: var(--on-ink);
-  --destructive: #b4544b;
-  --destructive-foreground: var(--on-ink);
-  --surface-container: var(--canvas);
-  --surface-container-low: var(--canvas-soft);
-  --surface-bright: var(--surface);
-  --border: var(--hairline);
-  --input: var(--line-strong);
-  --ring: var(--focus);
-  --chart-1: var(--ink);
-  --chart-2: var(--sub-body);
-  --chart-3: var(--faint);
-  --chart-4: var(--badge-ink);
-  --chart-5: var(--hairline);
-  --sidebar: var(--canvas-soft);
-  --sidebar-foreground: var(--ink);
-  --sidebar-primary: var(--button-bg);
-  --sidebar-primary-foreground: var(--on-ink);
-  --sidebar-accent: var(--canvas);
-  --sidebar-accent-foreground: var(--sub-body);
-  --sidebar-border: var(--hairline);
-  --sidebar-ring: var(--focus);
 }
 
 .dark {
