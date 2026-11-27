@@ -1,8 +1,11 @@
+import { m, useReducedMotion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import { Code2, Database, Palette, Server, Sigma, Sparkles } from "lucide-react";
 
 import { SKILL_CATEGORIES, type SkillCategory } from "@/data/portfolio";
 import { Reveal, SectionHeading, SectionLabel, SerifEm } from "./ui";
+
+const ease = [0.22, 1, 0.36, 1] as const;
 
 // Every card is backed by a CV skill category — no invented services.
 const SERVICE_IDS = ["frontend", "backend", "database", "uiux", "data", "ai"] as const;
@@ -20,6 +23,8 @@ const services = SERVICE_IDS.map((id) => SKILL_CATEGORIES.find((item) => item.id
 );
 
 export function ServicesSection() {
+  const reduce = useReducedMotion();
+
   return (
     <section
       id="skills"
@@ -49,7 +54,11 @@ export function ServicesSection() {
             const Icon = ICONS[service.id] ?? Sparkles;
             return (
               <Reveal key={service.id} delay={(index % 3) * 0.07}>
-                <article className="group h-full rounded-2xl border border-[var(--hairline)] bg-[var(--canvas)] p-7 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--line-strong)] hover:shadow-[0_24px_60px_-45px_var(--shadow)]">
+                <m.article
+                  whileHover={reduce ? undefined : { y: -4 }}
+                  transition={{ duration: 0.5, ease }}
+                  className="group h-full rounded-2xl border border-[var(--hairline)] bg-[var(--canvas)] p-7 transition-colors hover:border-[var(--line-strong)] hover:shadow-[0_24px_60px_-45px_var(--shadow)]"
+                >
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-[var(--surface)] text-[var(--ink)] transition-colors group-hover:bg-[var(--button-bg)] group-hover:text-[var(--on-ink)]">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
@@ -63,7 +72,7 @@ export function ServicesSection() {
                       </li>
                     ))}
                   </ul>
-                </article>
+                </m.article>
               </Reveal>
             );
           })}

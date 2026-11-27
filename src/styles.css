@@ -77,15 +77,9 @@
 }
 
 @layer base {
+  /* Lenis owns smooth scrolling; keep the anchor offset for reduced-motion fallback. */
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 112px;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
   }
 
   * {

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { domAnimation, LazyMotion, MotionConfig } from "framer-motion";
+import { ReactLenis } from "lenis/react";
 
 import { AboutSection } from "@/components/portfolio/AboutSection";
 import { CertificationsSection } from "@/components/portfolio/CertificationsSection";
@@ -60,22 +61,33 @@ function Index() {
   return (
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
-        <div className="min-h-screen bg-[var(--canvas)] font-body text-[var(--ink)] antialiased">
-          <Navbar />
+        <ReactLenis
+          root
+          options={{
+            autoRaf: true,
+            anchors: { offset: -112 },
+            lerp: 0.09,
+            smoothWheel: true,
+            respectReducedMotion: true,
+          }}
+        >
+          <div className="min-h-screen bg-[var(--canvas)] font-body text-[var(--ink)] antialiased">
+            <Navbar />
 
-          <main>
-            <HeroSection />
-            <AboutSection />
-            <ServicesSection />
-            <ProjectsSection />
-            <ExperienceSection />
-            <EducationSection />
-            <CertificationsSection />
-            <ContactSection />
-          </main>
+            <main>
+              <HeroSection />
+              <AboutSection />
+              <ServicesSection />
+              <ProjectsSection />
+              <ExperienceSection />
+              <EducationSection />
+              <CertificationsSection />
+              <ContactSection />
+            </main>
 
-          <FooterSection />
-        </div>
+            <FooterSection />
+          </div>
+        </ReactLenis>
       </MotionConfig>
     </LazyMotion>
   );

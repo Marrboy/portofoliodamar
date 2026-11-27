@@ -98,7 +98,7 @@ src/data/portfolio.ts                     single source of truth for all copy
 "mt-3 w-full border-b border-[var(--line-strong)] bg-transparent pb-2 text-[14px] text-[var(--ink)] outline-none focus:border-[var(--ink)]";
 ```
 
-Shared rules: `scroll-behavior: smooth`, `scroll-padding-top: 112px`, `:focus-visible { outline: 2px solid var(--focus) }`, `prefers-reduced-motion` disables smooth scrolling.
+Shared rules: `scroll-padding-top: 112px` (anchor offset), `:focus-visible { outline: 2px solid var(--focus) }`. Smooth scrolling is handled by Lenis, not CSS `scroll-behavior`, so the two never fight.
 
 ## 6. Motion patterns (Framer Motion)
 
@@ -120,7 +120,8 @@ const reduce = useReducedMotion();
 - No infinite ambient animation: motion answers user action (dialog, hover, scroll progress).
 - Hover: `y: -2…-4`, small rotations or border/underline transitions, always gated by `useReducedMotion()`.
 - Timeline: `useScroll({ target, offset: ["start end", "end start"] })` → `useTransform(progress, [0,1], ["0%","100%"])`.
-- `MotionConfig reducedMotion="user"` is the global safety net.
+- `MotionConfig reducedMotion="user"` is the global safety net. Service and project cards use `whileHover` for the lift instead of CSS transforms; their first paint uses `Reveal` (`whileInView`).
+- Lenis is mounted once from `src/routes/index.tsx` with `ReactLenis root`, `autoRaf`, `anchors: { offset: -112 }` and `respectReducedMotion`. GSAP/ScrollTrigger is deliberately not added — one animation library is enough for a project this size.
 
 ## 7. Responsive & performance
 

@@ -11,7 +11,7 @@ All displayed content is based on the CV in `src/data/portfolio.ts`. No invented
 - SSR with an error boundary, `sitemap.xml`, `robots.txt`, canonical URLs, Open Graph metadata and JSON-LD `Person`.
 - Contact uses a glass contact form that composes a `mailto:` draft (no backend, no data stored) plus direct email, LinkedIn, Instagram and GitHub links.
 - Social links (LinkedIn, Instagram, GitHub) appear as a centered icon row at the end of the photo-free hero, plus in the contact section, footer and CV header; all URLs come from `PROFILE` in `src/data/portfolio.ts`. The portrait is shown in About.
-- Visual system: light editorial by default with a working dark mode toggle in the centered floating pill navbar. Light uses a white/`#F7F8FA` canvas and `#111111` ink; dark is monochrome — pure white text on a true `#000000` canvas with white primary buttons. Inter bold headlines, Cormorant Garamond italic accents, restrained Framer Motion, responsive mobile-first layout. Theme choice is stored in `localStorage` and applied before paint; the first visit follows the system preference.
+- Visual system: light editorial by default with a working dark mode toggle in the centered floating pill navbar. Light uses a white/`#F7F8FA` canvas and `#111111` ink; dark is monochrome — pure white text on a true `#000000` canvas with white primary buttons. Inter bold headlines, Cormorant Garamond italic accents, restrained Framer Motion for card entrances/hover and Lenis for smooth scrolling (Motion was chosen over GSAP to keep this small project lean), responsive mobile-first layout. Theme choice is stored in `localStorage` and applied before paint; the first visit follows the system preference.
 
 ## Sections
 
